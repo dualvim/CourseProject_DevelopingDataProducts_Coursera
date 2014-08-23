@@ -1,0 +1,54 @@
+---
+title: "Two-Asset Portfolios & Efficient Portfolios Presentation"
+author: "dualvim"
+date: "Thursday, August 21, 2014"
+output:
+  ioslides_presentation:
+    keep_md: yes
+    widescreen: yes
+runtime: shiny
+---
+
+## Contents of the Presentation
+
+- The name of this application is **"Two-Asset Portfolios & Efficient Portfolios"**, which use is very helpful when studying portfolio theory.
+- The application shows, in an interactive way, how the changes in the expected stock return, the expected stock volatility, and the correlation between the stock returns affects the expected risk and returns of the resulting portfolios.
+- **The case explained in this application is the case of the portfolio with two stocks** (risk assets). Maybe later I make one for the 3 assets case.  
+- Also, this application shows how the return of the risk-free assets affects the efficient portfolios which combines one part of the investor's wealth in the risk-free asset and the remaining of his wealth in the tangency portfolio.
+- Slide 3: Shows the input variables (variables controlled by the sliders).
+- Slide 4: Shows the formulas used to calculate te output variables and the main points of the plot.
+- Slide 5: The Shiny Application.
+
+## Input Variables:
+
+- **E(Stock1)**: It's the expected return of stock1; the values range from -0.25 to +0.25, in steps of 0.001.
+- **E(Stock2)**: It's the expected return of stock2; the values range from -0.25 to +0.25, in steps of 0.001.
+- **sd(stock1)**: It's the expected volatility of stock1; the values range from 0 to 0.25, in steps of 0.001.
+- **sd(stock2)**: It's the expected volatility of stock2; the values range from 0 to 0.25, in steps of 0.001.
+- **corelation(ret(Stock1),ret(Stock2))**: Is the correlation between the returns of stock1 and stock 2. The values range from -1 to 1, in steps of 0.01. 
+
+## Output Variables
+
+The formula of the output variables are:
+
+- **Expected Portfolio Return**: $Weight_Stock1*E(Stock1)+Weight_Stock2*E(Stock2)$
+- **Covariance Between the 2 Stocks' Returns**: $correlation(ret(Stock1),ret(Stock2))*sd(stock1)*sd(stock2)$.
+- **Portfolio Expected Volatility**: $Weight_Stock1*E(Stock1)+Weight_Stock2*E(Stock2)$
+
+The meaning of the points in the plot are:
+
+- **Red points**: each poit represents the expected returns and the expected volatility (risk) of each possible portifolio. **In the plot, there are 101 portifolios, each with a different combination of the two stocks (risky assets)**.
+- **Green Points**: these points overplot the red points which represents the efficient portfolios. **An efficient portifolio is the one wich offers the highest expected riturn, given the level of the expected volatility.
+- **Blue Asterisks**: Are the expected return and volatility of the individual stocks.
+- **Orange Star**: is the expected risk and return of the minimum variance portifolio.
+- **Pink Square**: is the Tangency Portifolio, which is the one wich maximizes the sharpe ratio, which is calculated by the following formula:  $\frac{E(Rport)-Rf}{sd(R(port))}$.
+- **Black line**: Shows the efficient portfolios which invests x% in the risk-free asset and (1-x%) in the Tangency Portfolio.
+
+## The Shiny Application
+
+```{r, echo=FALSE}
+setwd("C:/Users/EduRDO/Desktop/Coursera/Especializacao Ciencia de Dados/9 - Developing Data Products/CourseProject/Versao3/")
+shinyAppDir(appDir="C:/Users/EduRDO/Desktop/Coursera/Especializacao Ciencia de Dados/9 - Developing Data Products/CourseProject/Versao3")
+```
+
+
