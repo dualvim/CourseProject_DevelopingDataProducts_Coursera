@@ -1,13 +1,15 @@
 ---
-title: "Two-Asset Portfolios & Efficient Portfolios Presentation"
-author: "dualvim"
-date: "Thursday, August 21, 2014"
-output:
-  ioslides_presentation:
-    keep_md: yes
-    widescreen: yes
-runtime: shiny
----
+title       : Two-Asset Portfolios & Efficient Portfolios Presentation
+subtitle    : Course Project of "Developing Data Products" - Coursera
+author      : Dualvim
+job         : Coursera
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+--- .class #id
 
 ## Contents of the Presentation
 
@@ -17,22 +19,25 @@ runtime: shiny
 - Also, this application shows how the return of the risk-free assets affects the efficient portfolios which combines one part of the investor's wealth in the risk-free asset and the remaining of his wealth in the tangency portfolio.
 - Slide 3: Shows the input variables (variables controlled by the sliders).
 - Slide 4: Shows the formulas used to calculate te output variables and the main points of the plot.
-- Slide 5: The Shiny Application.
+- Slide 5: Examples of outputs of the shyny application.
+
+--- .class #id
 
 ## Input Variables:
 
-- **E(Stock1)**: It's the expected return of stock1; the values range from -0.25 to +0.25, in steps of 0.001.
-- **E(Stock2)**: It's the expected return of stock2; the values range from -0.25 to +0.25, in steps of 0.001.
-- **sd(stock1)**: It's the expected volatility of stock1; the values range from 0 to 0.25, in steps of 0.001.
-- **sd(stock2)**: It's the expected volatility of stock2; the values range from 0 to 0.25, in steps of 0.001.
-- **corelation(ret(Stock1),ret(Stock2))**: Is the correlation between the returns of stock1 and stock 2. The values range from -1 to 1, in steps of 0.01. 
+1. **E(Stock1)**: It's the expected return of stock1; the values range from -0.25 to +0.25, in steps of 0.001.
+2. **E(Stock2)**: It's the expected return of stock2; the values range from -0.25 to +0.25, in steps of 0.001.
+3. **sd(stock1)**: It's the expected volatility of stock1; the values range from 0 to 0.25, in steps of 0.001.
+4. **sd(stock2)**: It's the expected volatility of stock2; the values range from 0 to 0.25, in steps of 0.001.
+5. **corelation(ret(Stock1),ret(Stock2))**: Is the correlation between the returns of stock1 and stock 2. The values range from -1 to 1, in steps of 0.01.
+6. **Return of Risk-Free Asset**: It's the rate of return of the risk-free asset.
 
-## Output Variables
-
+--- .class #id 
+# Output Variables
 The formula of the output variables are:
 
 - **Expected Portfolio Return**: $Weight_Stock1*E(Stock1)+Weight_Stock2*E(Stock2)$
-- **Covariance Between the 2 Stocks' Returns**: $correlation(ret(Stock1),ret(Stock2))*sd(stock1)*sd(stock2)$.
+- **Covariance Between the 2 Stocks' Returns**: $corelation(ret(Stock1),ret(Stock2))*\sigma(stock1)*\sigma(stock2)$.
 - **Portfolio Expected Volatility**: $Weight_Stock1*E(Stock1)+Weight_Stock2*E(Stock2)$
 
 The meaning of the points in the plot are:
@@ -41,14 +46,35 @@ The meaning of the points in the plot are:
 - **Green Points**: these points overplot the red points which represents the efficient portfolios. **An efficient portifolio is the one wich offers the highest expected riturn, given the level of the expected volatility.
 - **Blue Asterisks**: Are the expected return and volatility of the individual stocks.
 - **Orange Star**: is the expected risk and return of the minimum variance portifolio.
-- **Pink Square**: is the Tangency Portifolio, which is the one wich maximizes the sharpe ratio, which is calculated by the following formula:  $\frac{E(Rport)-Rf}{sd(R(port))}$.
+- **Pink Square**: is the Tangency Portifolio, which is the one wich maximizes the sharpe ratio, which is calculated by the following formula:  $\frac{E(Rport)-Rf}{\sigma(R(port))}$.
 - **Black line**: Shows the efficient portfolios which invests x% in the risk-free asset and (1-x%) in the Tangency Portfolio.
 
-## The Shiny Application
+--- .class #id 
+
+## Examples of Outputs of the Shiny App
+
+Consider E(Stock1)=0.145, E(Stock2)=0.08, \sigma(stock1)=0.081 and \sigma(stock1)=0.045. The plot below shows the results of the risk and return of the portifolios when the corelation between the two stocks returnas are -1, 0 and 1.
 
 ```{r, echo=FALSE}
-setwd("C:/Users/EduRDO/Desktop/Coursera/Especializacao Ciencia de Dados/9 - Developing Data Products/CourseProject/Versao3/")
-shinyAppDir(appDir="C:/Users/EduRDO/Desktop/Coursera/Especializacao Ciencia de Dados/9 - Developing Data Products/CourseProject/Versao3")
+w1 <- seq(0,1,by=0.01)
+w2 <- (1-w1)
+ret<-w1*0.145 + w2*0.081
+
+#Make the three plots:
+par(mfrow=c(1,3))
+
+#Plot 1: Corelation = -1
+covar <- (-1)*(0.081*0.045)
+StdDev<-sqrt((w1^2)*(0.081^2)+(w2^2)*(0.045^2)+(2*w1*w2*covar0))
+plot(x=StdDev,y=ret,main="Cor = -1")
+
+#Plot 2: Corelation = 0
+covar <- (0)*(0.081*0.045)
+StdDev<-sqrt((w1^2)*(0.081^2)+(w2^2)*(0.045^2)+(2*w1*w2*covar))
+plot(x=StdDev,y=ret,main="Cor = 0")
+
+#Plot 3: Corelation = 1
+covar <- (1)*(0.081*0.045)
+StdDev<-sqrt((w1^2)*(0.081^2)+(w2^2)*(0.045^2)+(2*w1*w2*covar))
+plot(x=StdDev,y=ret,main="Cor = 1")
 ```
-
-
